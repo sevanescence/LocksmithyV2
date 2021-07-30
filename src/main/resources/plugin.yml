@@ -1,0 +1,4 @@
+name: Locksmithyv2
+version: @version@
+main: com.makotomiyamoto.locksmithyv2.Locksmithyv2
+api-version: 1.16
