@@ -1,35 +1,33 @@
 package com.makotomiyamoto.locksmithyv2.lock.insecure;
 
 import com.makotomiyamoto.locksmithyv2.lock.InsecureLockable;
-import com.makotomiyamoto.locksmithyv2.minimized.LockOwner;
-import com.makotomiyamoto.locksmithyv2.minimized.LockLocation;
 import com.makotomiyamoto.locksmithyv2.util.GsonManager;
-import com.makotomiyamoto.locksmithyv2.util.JsonSerializable;
-import org.bukkit.block.Block;
+import com.makotomiyamoto.locksmithyv2.util.JsonSerialized;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-public class LockedChest implements InsecureLockable, JsonSerializable {
-    private final LockOwner owner;
-    private final LockLocation location;
+public class LockedContainer implements InsecureLockable, JsonSerialized {
+    private final Player owner;
+    private final Location location;
     private final UUID uuid;
     boolean locked = true;
     boolean picked = false;
 
-    public LockedChest(Player player, Block block) {
-        this.owner = new LockOwner(player);
-        this.location = new LockLocation(block.getLocation());
+    public LockedContainer(Player player, Location location) {
+        this.owner = player;
+        this.location = location;
         this.uuid = UUID.randomUUID();
     }
 
     @Override
-    public LockOwner getOwner() {
+    public Player getOwner() {
         return owner;
     }
 
     @Override
-    public LockLocation getLockLocation() {
+    public Location getLockLocation() {
         return location;
     }
 
