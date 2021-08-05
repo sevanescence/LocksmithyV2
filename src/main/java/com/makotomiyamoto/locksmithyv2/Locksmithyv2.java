@@ -1,8 +1,10 @@
 package com.makotomiyamoto.locksmithyv2;
 
 import com.makotomiyamoto.locksmithyv2.lock.Lockable;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
@@ -18,6 +20,7 @@ public final class Locksmithyv2 extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         System.out.println("Starting LocksmithyV2...");
+        Player player = Bukkit.getPlayer("MiyamotoMakoto");
         System.out.println("LocksmithyV2 enabled without any problems.");
     }
 

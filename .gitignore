@@ -101,7 +101,7 @@ $RECYCLE.BIN/
 *.lnk
 
 .gradle
-build/
+#build/ # included in repo to pull from server
 
 # Ignore Gradle GUI config
 gradle-app.setting
