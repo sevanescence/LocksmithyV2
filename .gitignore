@@ -1,5 +1,7 @@
 # User-specific stuff
 .idea/
+*.bat
+*.pem
 
 *.iml
 *.ipr
