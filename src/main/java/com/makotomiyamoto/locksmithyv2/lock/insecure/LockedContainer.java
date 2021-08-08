@@ -1,28 +1,26 @@
 package com.makotomiyamoto.locksmithyv2.lock.insecure;
 
 import com.makotomiyamoto.locksmithyv2.lock.InsecureLockable;
-import com.makotomiyamoto.locksmithyv2.util.GsonManager;
-import com.makotomiyamoto.locksmithyv2.util.JsonSerialized;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
+import org.bukkit.OfflinePlayer;
 
 import java.util.UUID;
 
-public class LockedContainer implements InsecureLockable, JsonSerialized {
-    private final Player owner;
+public class LockedContainer implements InsecureLockable {
+    private final OfflinePlayer owner;
     private final Location location;
     private final UUID uuid;
     boolean locked = true;
     boolean picked = false;
 
-    public LockedContainer(Player player, Location location) {
+    public LockedContainer(OfflinePlayer player, Location location) {
         this.owner = player;
         this.location = location;
         this.uuid = UUID.randomUUID();
     }
 
     @Override
-    public Player getOwner() {
+    public OfflinePlayer getOwner() {
         return owner;
     }
 
@@ -56,8 +54,4 @@ public class LockedContainer implements InsecureLockable, JsonSerialized {
         this.picked = picked;
     }
 
-    @Override
-    public String toJSON() {
-        return GsonManager.GSON.toJson(this);
-    }
 }

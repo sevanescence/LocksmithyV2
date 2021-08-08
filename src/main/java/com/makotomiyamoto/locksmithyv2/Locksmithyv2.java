@@ -1,20 +1,26 @@
 package com.makotomiyamoto.locksmithyv2;
 
-import com.makotomiyamoto.locksmithyv2.listener.debug.DebugRightClickListener;
+import com.makotomiyamoto.locksmithyv2.executors.debug.GetPlayerPosition;
 import com.makotomiyamoto.locksmithyv2.lock.Lockable;
+import com.makotomiyamoto.locksmithyv2.strategy.gson.impl.ChunkSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.strategy.gson.impl.LocationSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.strategy.gson.impl.OfflinePlayerSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.util.GsonManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.UUID;
 
 public final class Locksmithyv2 extends JavaPlugin {
-    private final HashMap<Chunk, HashMap<Location, Lockable>> lockedChests = new HashMap<>();
+    private static final HashMap<Chunk, HashMap<Location, Lockable>> lockedChests = new HashMap<>();
     public static String prefixString(String string) {
-        return "§8[§eLocksmithyV2§8] &r" + string;
+        return "[LocksmithyV2] " + string;
     }
     // TODO location references should be sorted by folder and location
     // e.g. /locksmithyv2/locks/chunk_x_z/Lockable#getUUID().json
@@ -25,10 +31,11 @@ public final class Locksmithyv2 extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         System.out.println("Starting LocksmithyV2...");
-        this.getServer().getPluginManager().registerEvents(new DebugRightClickListener(), this);
+        GsonManager.registerSerializationAdapter(new OfflinePlayerSerializationAdapter());
+        GsonManager.registerSerializationAdapter(new LocationSerializationAdapter());
+        GsonManager.registerSerializationAdapter(new ChunkSerializationAdapter());
 
-        Player player = Bukkit.getPlayer("MiyamotoMakoto");
-        System.out.println(GsonManager.GSON.toJson(player));
+        Objects.requireNonNull(this.getCommand("ploc")).setExecutor(new GetPlayerPosition());;
 
         System.out.println("LocksmithyV2 enabled without any problems.");
     }
@@ -36,5 +43,9 @@ public final class Locksmithyv2 extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+    }
+
+    public static HashMap<Chunk, HashMap<Location, Lockable>> getLockedChests() {
+        return lockedChests;
     }
 }

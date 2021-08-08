@@ -3,11 +3,14 @@ package com.makotomiyamoto.locksmithyv2.listener.debug;
 import com.makotomiyamoto.locksmithyv2.Locksmithyv2;
 import com.makotomiyamoto.locksmithyv2.util.GenericComparator;
 import org.bukkit.Chunk;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+@Deprecated
 public class DebugRightClickListener implements Listener {
+    @EventHandler
     public void onClick(PlayerInteractEvent event) {
         if (! GenericComparator.equalsAny(event.getAction(), Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK)) {
             return;
