@@ -5,96 +5,56 @@ import com.makotomiyamoto.locksmithyv2.strategy.gson.JsonSerializationAdapter;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 
+/**
+ * A utility class which serves as a wrapper for the Gson library
+ * to manage type adapter overrides for objects.
+ */
 public abstract class GsonManager {
     private static Gson gson;
     private static final GsonBuilder gsonBuilder = new GsonBuilder();
 
+    /**
+     * <pre>
+     * Register a type adapter for serialization and deserialization.
+     * When serializing an object whose adapter strategy is passed through
+     * registerSerializationAdapter, if the instance passed is not a base
+     * class, pass its static class type to Gson#toJson to avoid serializing
+     * the object with the strategy of its base class.
+     *
+     * It is recommended to initialize every adapter strategy in a library
+     * or project at startup time, because the instance of Gson managed
+     * by GsonManager is reinitialized every time an adapter is registered
+     * by the manager's GsonBuilder instance.
+     * </pre>
+     * @param adapter Gson adapter strategy
+     * @param <T> type of object whose serialization strategy is overwritten
+     */
     public static <T> void registerSerializationAdapter(JsonSerializationAdapter<T> adapter) {
         Type type = ((ParameterizedType) adapter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         gsonBuilder.registerTypeAdapter(type, adapter);
         gson = gsonBuilder.create();
     }
 
+    /**
+     * A wrapper to fetch a statically-scoped Gson instance that is managed
+     * by the library. This operation is unsafe as this Gson instance is
+     * reinitialized every time {@link #registerSerializationAdapter(JsonSerializationAdapter)
+     * GsonManager.registerSerializationAdapter} is called.
+     * @return static gson instance
+     */
     public static Gson getGson() {
         return gson;
     }
 
-//    public static final Gson GSON;
-//
-//    private static final JsonSerializer<Player> playerJsonSerializer;
-//    private static final JsonDeserializer<Player> playerJsonDeserializer;
-//    private static final JsonSerializer<Location> locationJsonSerializer;
-//    private static final JsonDeserializer<Location> locationJsonDeserializer;
-//    private static final JsonSerializer<Chunk> chunkJsonSerializer;
-//    private static final JsonDeserializer<Chunk> chunkJsonDeserializer;
-//    static {
-//        GsonBuilder staticGsonConfiguration = new GsonBuilder();
-//
-//        playerJsonSerializer = (src, typeOfSrc, context) -> {
-//            JsonObject jsonBukkitPlayer = new JsonObject();
-//
-//            jsonBukkitPlayer.addProperty("uuid", src.getUniqueId().toString());
-//
-//            return jsonBukkitPlayer;
-//        };
-//        playerJsonDeserializer = (json, typeOfT, context) -> {
-//            JsonObject jsonBukkitPlayerContainer = json.getAsJsonObject();
-//
-//            UUID playerUniqueId = UUID.fromString(jsonBukkitPlayerContainer.get("uuid").getAsString());
-//            Player player = Bukkit.getPlayer(playerUniqueId);
-//            assert player != null;
-//
-//            return player;
-//        };
-//        staticGsonConfiguration.registerTypeAdapter(Player.class, playerJsonSerializer);
-//        staticGsonConfiguration.registerTypeAdapter(Player.class, playerJsonDeserializer);
-//
-//        locationJsonSerializer = (src, typeOfSrc, context) -> {
-//            JsonObject jsonBukkitLocation = new JsonObject();
-//
-//            jsonBukkitLocation.addProperty("x", src.getBlockX());
-//            jsonBukkitLocation.addProperty("y", src.getBlockY());
-//            jsonBukkitLocation.addProperty("z", src.getBlockZ());
-//            jsonBukkitLocation.addProperty("world", Objects.requireNonNull(src.getWorld()).getUID().toString());
-//
-//            return jsonBukkitLocation;
-//        };
-//        locationJsonDeserializer = (json, typeOfT, context) -> {
-//            JsonObject jsonBukkitLocationContainer = json.getAsJsonObject();
-//
-//            double x = jsonBukkitLocationContainer.get("x").getAsDouble(),
-//                    y = jsonBukkitLocationContainer.get("y").getAsDouble(),
-//                    z = jsonBukkitLocationContainer.get("z").getAsDouble();
-//            World world = Bukkit.getWorld(UUID.fromString(jsonBukkitLocationContainer.get("world").getAsString()));
-//
-//            return new Location(world, x, y, z);
-//        };
-//        staticGsonConfiguration.registerTypeAdapter(Location.class, locationJsonSerializer);
-//        staticGsonConfiguration.registerTypeAdapter(Location.class, locationJsonDeserializer);
-//
-//        chunkJsonSerializer = (src, typeOfSrc, context) -> {
-//            JsonObject jsonBukkitChunk = new JsonObject();
-//
-//            jsonBukkitChunk.addProperty("x", src.getX());
-//            jsonBukkitChunk.addProperty("z", src.getZ());
-//            jsonBukkitChunk.addProperty("world", src.getWorld().getUID().toString());
-//
-//            return jsonBukkitChunk;
-//        };
-//        chunkJsonDeserializer = (json, typeOfT, context) -> {
-//            JsonObject jsonBukkitChunkContainer = json.getAsJsonObject();
-//
-//            int x = jsonBukkitChunkContainer.get("x").getAsInt();
-//            int z = jsonBukkitChunkContainer.get("z").getAsInt();
-//            UUID worldUUID = UUID.fromString(jsonBukkitChunkContainer.get("world").getAsString());
-//
-//            return Objects.requireNonNull(Bukkit.getWorld(worldUUID)).getChunkAt(x, z);
-//        };
-//        staticGsonConfiguration.registerTypeAdapter(Chunk.class, chunkJsonSerializer);
-//        staticGsonConfiguration.registerTypeAdapter(Chunk.class, chunkJsonDeserializer);
-//
-//        GSON = staticGsonConfiguration.create();
-//    }
+    /**
+     * Gets the GsonBuilder instance used by GsonManager. This can be used
+     * to add new properties to the GsonManager wrapper if they are not
+     * already set by the static library. GsonManager#gsonBuilder is final
+     * and thus cannot be reinitialized.
+     * @return the GsonBuilder instance
+     */
+    public static GsonBuilder getGsonBuilder() {
+        return gsonBuilder;
+    }
 }
