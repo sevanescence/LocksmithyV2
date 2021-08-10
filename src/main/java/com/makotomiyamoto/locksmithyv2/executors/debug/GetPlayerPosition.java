@@ -1,6 +1,5 @@
 package com.makotomiyamoto.locksmithyv2.executors.debug;
 
-import com.makotomiyamoto.locksmithyv2.Locksmithyv2;
 import com.makotomiyamoto.locksmithyv2.util.GsonManager;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

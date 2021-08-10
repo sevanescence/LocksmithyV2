@@ -9,24 +9,28 @@ import java.lang.reflect.Type;
 /**
  * A utility class which serves as a wrapper for the Gson library
  * to manage type adapter overrides for objects.
+ *
+ * @author MakotoMiyamoto
  */
 public abstract class GsonManager {
     private static Gson gson;
     private static final GsonBuilder gsonBuilder = new GsonBuilder();
 
     /**
-     * <pre>
+     * <p>
      * Register a type adapter for serialization and deserialization.
      * When serializing an object whose adapter strategy is passed through
      * registerSerializationAdapter, if the instance passed is not a base
      * class, pass its static class type to Gson#toJson to avoid serializing
      * the object with the strategy of its base class.
-     *
+     * </p>
+     * <br/>
+     * <p>
      * It is recommended to initialize every adapter strategy in a library
      * or project at startup time, because the instance of Gson managed
      * by GsonManager is reinitialized every time an adapter is registered
      * by the manager's GsonBuilder instance.
-     * </pre>
+     * </p>
      * @param adapter Gson adapter strategy
      * @param <T> type of object whose serialization strategy is overwritten
      */

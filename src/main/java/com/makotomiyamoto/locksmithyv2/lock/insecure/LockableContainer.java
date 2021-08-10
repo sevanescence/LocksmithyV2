@@ -10,6 +10,11 @@ import java.util.UUID;
 /**
  * Represents an insecure lockable container that (currently) encapsulates all
  * inventory-interactable blocks. This implementation might change overtime.
+ *
+ * @author MakotoMiyamoto
+ *
+ * @apiNote In future versions of Locksmithy, different containers may be
+ * maintained by different structures, however it isn't 100% certain.
  */
 public class LockableContainer implements InsecureLockable {
     private final OfflinePlayer owner;

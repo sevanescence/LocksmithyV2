@@ -10,6 +10,9 @@ import java.util.UUID;
  * Represents a container that is able to be locked or is
  * already locked. A lockable container must have an owner,
  * location, uuid, and lock state.
+ *
+ * @see com.makotomiyamoto.locksmithyv2.lock.insecure.LockableContainer LockableContainer
+ * @author MakotoMiyamoto
  */
 public interface Lockable {
     /**

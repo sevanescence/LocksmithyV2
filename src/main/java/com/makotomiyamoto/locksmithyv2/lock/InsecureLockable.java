@@ -5,6 +5,9 @@ package com.makotomiyamoto.locksmithyv2.lock;
  * forcibly unlocked by a non-operator player. In the
  * base implementation of Locksmithy, InsecureLockable
  * containers are able to be opened via lock picking.
+ *
+ * @see com.makotomiyamoto.locksmithyv2.lock.insecure.LockableContainer LockableContainer
+ * @author MakotoMiyamoto
  */
 public interface InsecureLockable extends Lockable {
     /**

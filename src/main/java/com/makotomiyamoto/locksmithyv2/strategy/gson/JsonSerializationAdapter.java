@@ -9,6 +9,8 @@ import java.lang.reflect.Type;
  * which serves as a buffer for appending type adapter strategies to the
  * {@link com.makotomiyamoto.locksmithyv2.util.GsonManager GsonManager} library.
  * @param <T> type of object whose strategy to overwrite
+ *
+ * @author MakotoMiyamoto
  */
 public abstract class JsonSerializationAdapter<T> implements JsonSerializer<T>, JsonDeserializer<T> {
     /**

@@ -1,6 +1,6 @@
 package com.makotomiyamoto.locksmithyv2.listener.debug;
 
-import com.makotomiyamoto.locksmithyv2.Locksmithyv2;
+import com.makotomiyamoto.locksmithyv2.LocksmithyPlugin;
 import com.makotomiyamoto.locksmithyv2.util.GenericComparator;
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
@@ -22,7 +22,7 @@ public class DebugRightClickListener implements Listener {
                         ? event.getPlayer().getLocation().getChunk()
                         : event.getClickedBlock().getChunk();
 
-        String debug = Locksmithyv2.prefixString("Chunk x: §3" + chunk.getX() + "§r, z: §3" + chunk.getZ() + "§r at ");
+        String debug = LocksmithyPlugin.prefixString("Chunk x: §3" + chunk.getX() + "§r, z: §3" + chunk.getZ() + "§r at ");
         debug += isAirClicked ? "player." : "clicked block.";
         event.getPlayer().sendMessage(debug);
     }
