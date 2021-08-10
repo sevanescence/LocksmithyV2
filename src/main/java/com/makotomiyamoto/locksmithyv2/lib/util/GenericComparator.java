@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.util;
+package com.makotomiyamoto.locksmithyv2.lib.util;
 
 public abstract class GenericComparator {
     @SafeVarargs

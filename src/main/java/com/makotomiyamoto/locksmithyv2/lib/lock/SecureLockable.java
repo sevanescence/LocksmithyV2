@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.lock;
+package com.makotomiyamoto.locksmithyv2.lib.lock;
 
 /**
  * Represents a lockable container that cannot be

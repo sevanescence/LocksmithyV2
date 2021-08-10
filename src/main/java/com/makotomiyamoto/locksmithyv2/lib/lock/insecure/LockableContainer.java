@@ -1,7 +1,7 @@
-package com.makotomiyamoto.locksmithyv2.lock.insecure;
+package com.makotomiyamoto.locksmithyv2.lib.lock.insecure;
 
-import com.makotomiyamoto.locksmithyv2.lock.InsecureLockable;
-import com.makotomiyamoto.locksmithyv2.lock.Lockable;
+import com.makotomiyamoto.locksmithyv2.lib.lock.InsecureLockable;
+import com.makotomiyamoto.locksmithyv2.lib.lock.Lockable;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 

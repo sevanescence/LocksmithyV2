@@ -1,13 +1,13 @@
 package com.makotomiyamoto.locksmithyv2;
 
-import com.makotomiyamoto.locksmithyv2.executors.debug.GetPlayerPosition;
-import com.makotomiyamoto.locksmithyv2.listener.debug.block.BlockBreakListener;
-import com.makotomiyamoto.locksmithyv2.listener.debug.block.ExplosionListener;
-import com.makotomiyamoto.locksmithyv2.strategy.gson.impl.ChunkSerializationAdapter;
-import com.makotomiyamoto.locksmithyv2.strategy.gson.impl.LocationSerializationAdapter;
-import com.makotomiyamoto.locksmithyv2.strategy.gson.impl.OfflinePlayerSerializationAdapter;
-import com.makotomiyamoto.locksmithyv2.util.GsonManager;
-import com.makotomiyamoto.locksmithyv2.util.Locksmithy;
+import com.makotomiyamoto.locksmithyv2.impl.bukkit.executor.GetPlayerPosition;
+import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.BlockBreakListener;
+import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.ExplosionListener;
+import com.makotomiyamoto.locksmithyv2.impl.gson.ChunkSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.impl.gson.LocationSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.impl.gson.OfflinePlayerSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
+import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;

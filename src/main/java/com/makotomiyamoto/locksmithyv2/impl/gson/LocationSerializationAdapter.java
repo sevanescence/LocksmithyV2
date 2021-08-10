@@ -1,7 +1,7 @@
-package com.makotomiyamoto.locksmithyv2.strategy.gson.impl;
+package com.makotomiyamoto.locksmithyv2.impl.gson;
 
 import com.google.gson.*;
-import com.makotomiyamoto.locksmithyv2.strategy.gson.JsonSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.lib.gson.JsonSerializationAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 

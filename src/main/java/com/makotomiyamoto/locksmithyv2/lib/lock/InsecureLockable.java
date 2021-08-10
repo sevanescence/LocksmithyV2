@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.lock;
+package com.makotomiyamoto.locksmithyv2.lib.lock;
 
 /**
  * Represents a lockable container that is able to be
@@ -6,7 +6,7 @@ package com.makotomiyamoto.locksmithyv2.lock;
  * base implementation of Locksmithy, InsecureLockable
  * containers are able to be opened via lock picking.
  *
- * @see com.makotomiyamoto.locksmithyv2.lock.insecure.LockableContainer LockableContainer
+ * @see com.makotomiyamoto.locksmithyv2.lib.lock.insecure.LockableContainer LockableContainer
  * @author MakotoMiyamoto
  */
 public interface InsecureLockable extends Lockable {

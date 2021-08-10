@@ -1,7 +1,7 @@
-package com.makotomiyamoto.locksmithyv2.util;
+package com.makotomiyamoto.locksmithyv2.lib.util;
 
-import com.makotomiyamoto.locksmithyv2.lock.InsecureLockable;
-import com.makotomiyamoto.locksmithyv2.lock.Lockable;
+import com.makotomiyamoto.locksmithyv2.lib.lock.InsecureLockable;
+import com.makotomiyamoto.locksmithyv2.lib.lock.Lockable;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
@@ -10,11 +10,16 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
+ * <p>
  * Wrapper class which handles and maintains the {@link Lockable Lockable} container cache.
+ * </p>
+ * <br/>
+ * <p>
+ * Note: Do not confuse this with {@link com.makotomiyamoto.locksmithyv2.LocksmithyPlugin LocksmithyPlugin},
+ * which is the plugin's runtime logic container.
+ * </p>
  *
  * @author MakotoMiyamoto
- * @apiNote Do not confuse this with {@link com.makotomiyamoto.locksmithyv2.LocksmithyPlugin LocksmithyPlugin},
- * which is the plugin's runtime logic container.
  */
 public abstract class Locksmithy {
     private static final HashMap<Chunk, HashMap<Location, Lockable>> lockableContainers = new HashMap<>();
@@ -42,7 +47,7 @@ public abstract class Locksmithy {
      * Checks whether a lockable container is a secure container.
      * @param lockable the lockable container
      * @return whether a lockable is secure
-     * @see com.makotomiyamoto.locksmithyv2.lock.SecureLockable SecureLockable
+     * @see com.makotomiyamoto.locksmithyv2.lib.lock.SecureLockable SecureLockable
      */
     public static boolean lockableIsSecure(Lockable lockable) {
         return !lockableIsInsecure(lockable);
@@ -50,9 +55,9 @@ public abstract class Locksmithy {
 
     /**
      * Checks whether a location is maintained by Locksmithy's lockable system.
+     * To fetch a lockable container at a location, use {@link #get(Location)} instead.
      * @param location a location object
      * @return whether a location is lockable
-     * @apiNote To fetch a lockable container at a location, use . instead
      */
     public static boolean locationIsLockable(Location location) {
         HashMap<Location, Lockable> lockablesInChunk = lockableContainers.get(location.getChunk());
@@ -81,12 +86,12 @@ public abstract class Locksmithy {
 
     /**
      * Attempts to read the chunks folder in the LocksmithyV2 data folder and parse
-     * the data into the Locksmithy lockable cache.
+     * the data into the Locksmithy lockable cache. Calling this method during runtime
+     * at any point besides plugin enable is unsafe as it will overwrite the existing cache.
+     *
      * @param folder the folder which contains every chunk folder
      * @throws IOException might be returned if either the chunks folder does not exist
      * or something else goes wrong during file reading.
-     * @apiNote Calling this method during runtime at any point besides plugin enable
-     * is unsafe as it will overwrite the existing cache.
      *
      * @implNote Not yet implemented. Don't use this (yet).
      */
@@ -96,13 +101,13 @@ public abstract class Locksmithy {
 
     /**
      * Attempts to write the lockable cache into the chunks folder. Cache is not cleared
-     * when this method is called.
+     * when this method is called. Calling this method during runtime is safe, but not
+     * recommended on the main server thread. You could safely use this to save a
+     * mid-runtime backup of the lockable cache.
+     *
      * @param folder the folder which contains every chunk folder
      * @throws IOException might be returned if either the chunks folder does not exist
      * or something else goes wrong during file writing.
-     * @apiNote Calling this method during runtime is safe, but is not recommended on the
-     * main server thread. You could safely use this to save a mid-runtime backup of the
-     * lockable cache.
      *
      * @implNote Not yet implemented. Don't use this (yet).
      */

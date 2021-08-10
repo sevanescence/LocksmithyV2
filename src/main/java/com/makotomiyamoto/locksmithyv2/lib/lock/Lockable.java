@@ -1,8 +1,7 @@
-package com.makotomiyamoto.locksmithyv2.lock;
+package com.makotomiyamoto.locksmithyv2.lib.lock;
 
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -11,7 +10,7 @@ import java.util.UUID;
  * already locked. A lockable container must have an owner,
  * location, uuid, and lock state.
  *
- * @see com.makotomiyamoto.locksmithyv2.lock.insecure.LockableContainer LockableContainer
+ * @see com.makotomiyamoto.locksmithyv2.lib.lock.insecure.LockableContainer LockableContainer
  * @author MakotoMiyamoto
  */
 public interface Lockable {

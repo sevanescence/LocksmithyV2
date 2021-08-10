@@ -1,6 +1,6 @@
-package com.makotomiyamoto.locksmithyv2.executors.debug;
+package com.makotomiyamoto.locksmithyv2.impl.bukkit.executor;
 
-import com.makotomiyamoto.locksmithyv2.util.GsonManager;
+import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
