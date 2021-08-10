@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.lib.gson;
+package com.makotomiyamoto.locksmithyv2.lib.gson.adapter;
 
 import com.google.gson.*;
 

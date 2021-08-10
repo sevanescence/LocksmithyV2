@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.makotomiyamoto.locksmithyv2.lib.gson.JsonSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.lib.gson.adapter.JsonSerializationAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 

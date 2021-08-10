@@ -1,7 +1,7 @@
 package com.makotomiyamoto.locksmithyv2.lib.util;
 
 import com.google.gson.*;
-import com.makotomiyamoto.locksmithyv2.lib.gson.JsonSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.lib.gson.adapter.JsonSerializationAdapter;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
