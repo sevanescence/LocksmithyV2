@@ -8,6 +8,8 @@ import com.makotomiyamoto.locksmithyv2.impl.adapter.LocationSerializationAdapter
 import com.makotomiyamoto.locksmithyv2.impl.adapter.OfflinePlayerSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
+import com.makotomiyamoto.locksmithyv2.test.CreateFakeLockableLol;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -43,7 +45,6 @@ public final class LocksmithyPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-        System.out.println("Starting LocksmithyV2...");
         GsonManager.registerSerializationAdapter(new OfflinePlayerSerializationAdapter());
         GsonManager.registerSerializationAdapter(new LocationSerializationAdapter());
         GsonManager.registerSerializationAdapter(new ChunkSerializationAdapter());
@@ -53,18 +54,21 @@ public final class LocksmithyPlugin extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
 
+        // test
+        this.getServer().getPluginManager().registerEvents(new CreateFakeLockableLol(), this);
+
         try {
             chunksFolder = new File(this.getDataFolder().getAbsolutePath() + File.separator + "chunks");
             Locksmithy.loadLockableChunksFolder(chunksFolder);
         } catch (IOException e) {
             if (e instanceof FileNotFoundException) {
-                // TODO create folder, initialize cache
+                if (chunksFolder.mkdirs()) System.out.println(chunksFolder.getAbsolutePath() + " created!");
             } else {
                 e.printStackTrace();
             }
         }
 
-        System.out.println("LocksmithyV2 enabled without any problems.");
+        this.getLogger().info("LocksmithyV2 enabled without any problems.");
     }
 
     @Override

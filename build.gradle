@@ -5,7 +5,8 @@ plugins {
 }
 
 group = 'com.makotomiyamoto'
-version = '1.0-SNAPSHOT'
+version = ''
+project.archivesBaseName = 'locksmithy'
 
 //sourceCompatibility = '1.8'
 //targetCompatibility = '1.8'

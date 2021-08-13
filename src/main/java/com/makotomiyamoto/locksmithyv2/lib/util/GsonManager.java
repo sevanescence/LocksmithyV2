@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  */
 public abstract class GsonManager {
     private static Gson gson;
-    private static final GsonBuilder gsonBuilder = new GsonBuilder();
+    private static final GsonBuilder gsonBuilder = new GsonBuilder().disableHtmlEscaping();
 
     /**
      * <p>

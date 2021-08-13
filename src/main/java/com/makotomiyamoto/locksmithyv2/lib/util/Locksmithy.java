@@ -1,13 +1,22 @@
 package com.makotomiyamoto.locksmithyv2.lib.util;
 
+import com.google.gson.reflect.TypeToken;
 import com.makotomiyamoto.locksmithyv2.lib.lock.InsecureLockable;
 import com.makotomiyamoto.locksmithyv2.lib.lock.Lockable;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.lang.reflect.Type;
+import java.net.URI;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -97,6 +106,38 @@ public abstract class Locksmithy {
      */
     public static void loadLockableChunksFolder(File folder) throws IOException {
         // TODO implement this
+        // x_y.chunk.json
+        File[] chunks = folder.listFiles((dir, name) -> name.endsWith(".chunk.json"));
+        if (chunks == null) throw new FileNotFoundException("chunks folder does not exist.");
+
+        Arrays.asList(chunks).forEach(file -> {
+            try(FileReader reader = new FileReader(file)) {
+                Type mapType = new TypeToken<HashMap<Location, Lockable>>() {}.getType();
+                HashMap<Location, Lockable> lockableMap = GsonManager.getGson().fromJson(reader, mapType);
+                // TODO get chunk
+
+                // chunk x, y: [-0-9]+?(?=[^-0-9]) # first match is x, second is y
+                // world uuid: [0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}
+                //      # first match is uuid
+                Pattern chunk_x_y = Pattern.compile("[-0-9]+?(?=[^-0-9])");
+                Pattern chunk_uuid
+                        = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}");
+
+                Matcher chunkXYMatcher = chunk_x_y.matcher(file.getName());
+                Matcher worldUUIDMatcher = chunk_uuid.matcher(file.getName());
+
+                int x, y;
+                UUID uuid;
+                x = Integer.parseInt(MatcherUtils.getNextFind(chunkXYMatcher, 0));
+                y = Integer.parseInt(MatcherUtils.getNextFind(chunkXYMatcher, 0));
+                uuid = UUID.fromString(MatcherUtils.getNextFind(worldUUIDMatcher, 0));
+
+                Chunk chunk = Objects.requireNonNull(Bukkit.getWorld(uuid)).getChunkAt(x, y);
+                Locksmithy.getLockableContainers().put(chunk, lockableMap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**

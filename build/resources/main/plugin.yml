@@ -1,6 +1,7 @@
 name: Locksmithyv2
-version: 1.0-SNAPSHOT
-main: com.makotomiyamoto.locksmithyv2.Locksmithyv2
+#version:  <- removed from gradle
+version: 1.0
+main: com.makotomiyamoto.locksmithyv2.LocksmithyPlugin
 api-version: 1.16
 commands:
   ploc:
