@@ -45,8 +45,8 @@ public class CreateFakeLockableLol implements Listener {
                     Locksmithy.getLockableContainers().get(chunk).put(loc, lock);
                     player.sendMessage("New lockable created.");
                     player.sendMessage(GsonManager.getGson().toJson(loc));
-                    player.sendMessage(GsonManager.getGson().toJson(chunk));
-                    player.sendMessage(GsonManager.getGson().toJson(lock));
+                    player.sendMessage(GsonManager.getGson().toJson(chunk/*, Chunk.class*/));
+                    //player.sendMessage(GsonManager.getGson().toJson(lock));
                 }
             } else {
                 // get location data if lockable

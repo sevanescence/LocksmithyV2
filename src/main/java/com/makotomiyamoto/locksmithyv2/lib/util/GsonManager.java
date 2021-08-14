@@ -40,6 +40,12 @@ public abstract class GsonManager {
         gson = gsonBuilder.create();
     }
 
+    public static <T> void registerSerializationHierarchyAdapter(JsonSerializationAdapter<T> adapter) {
+        Type type = ((ParameterizedType) adapter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+        gsonBuilder.registerTypeHierarchyAdapter((Class<?>) type, adapter);
+        gson = gsonBuilder.create();
+    }
+
     /**
      * A wrapper to fetch a statically-scoped Gson instance that is managed
      * by the library. This operation is unsafe as this Gson instance is
