@@ -40,6 +40,18 @@ public abstract class GsonManager {
         gson = gsonBuilder.create();
     }
 
+    /**
+     * <p>
+     * Register a type adapter for serialization and deserialization.
+     * Use this method instead of {@link #registerSerializationAdapter(JsonSerializationAdapter)}
+     * if the object whose strategy is being overwritten is the child of another class.
+     * If you get really weird parsing errors that are a bit difficult to find on
+     * the internet, then this is probably the method you want to use.
+     * </p>
+     * @param adapter Gson adapter strategy
+     * @param <T> type of object whose serialization strategy is overwritten
+     * @see #registerSerializationAdapter(JsonSerializationAdapter) 
+     */
     public static <T> void registerSerializationHierarchyAdapter(JsonSerializationAdapter<T> adapter) {
         Type type = ((ParameterizedType) adapter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         gsonBuilder.registerTypeHierarchyAdapter((Class<?>) type, adapter);
