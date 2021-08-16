@@ -48,6 +48,7 @@ public final class LocksmithyPlugin extends JavaPlugin {
         GsonManager.registerSerializationHierarchyAdapter(new OfflinePlayerSerializationAdapter());
         GsonManager.registerSerializationAdapter(new LocationSerializationAdapter());
         GsonManager.registerSerializationHierarchyAdapter(new ChunkSerializationAdapter());
+        GsonManager.flush();
 
         Objects.requireNonNull(this.getCommand("ploc")).setExecutor(new GetPlayerPosition());
 

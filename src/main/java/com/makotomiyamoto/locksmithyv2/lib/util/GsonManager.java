@@ -8,13 +8,25 @@ import java.lang.reflect.Type;
 
 /**
  * A utility class which serves as a wrapper for the Gson library
- * to manage type adapter overrides for objects.
+ * to manage type adapter overrides for objects. The built-in
+ * GsonBuilder has html escaping disabled by default.
  *
  * @author MakotoMiyamoto
  */
 public abstract class GsonManager {
     private static Gson gson;
     private static final GsonBuilder gsonBuilder = new GsonBuilder().disableHtmlEscaping();
+
+    /**
+     * Flush the built-in GsonBuilder to append all of its new changes
+     * to the Gson instance. Calling this is required after configuring
+     * the built-in GsonManager or calling
+     * {@link #registerSerializationAdapter(JsonSerializationAdapter)} or
+     * {@link #registerSerializationHierarchyAdapter(JsonSerializationAdapter)}
+     */
+    public static void flush() {
+        gson = gsonBuilder.create();
+    }
 
     /**
      * <p>
@@ -37,7 +49,7 @@ public abstract class GsonManager {
     public static <T> void registerSerializationAdapter(JsonSerializationAdapter<T> adapter) {
         Type type = ((ParameterizedType) adapter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         gsonBuilder.registerTypeAdapter(type, adapter);
-        gson = gsonBuilder.create();
+        //gson = gsonBuilder.create();
     }
 
     /**
@@ -55,7 +67,7 @@ public abstract class GsonManager {
     public static <T> void registerSerializationHierarchyAdapter(JsonSerializationAdapter<T> adapter) {
         Type type = ((ParameterizedType) adapter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         gsonBuilder.registerTypeHierarchyAdapter((Class<?>) type, adapter);
-        gson = gsonBuilder.create();
+        //gson = gsonBuilder.create();
     }
 
     /**
