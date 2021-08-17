@@ -5,11 +5,9 @@ plugins {
 }
 
 group = 'com.makotomiyamoto'
-version = ''
 project.archivesBaseName = 'locksmithy'
-
-//sourceCompatibility = '1.8'
-//targetCompatibility = '1.8'
+version = '0.1-ALPHA'
+jar.archiveFileName = 'lockmithy.jar'
 
 repositories {
     mavenCentral()

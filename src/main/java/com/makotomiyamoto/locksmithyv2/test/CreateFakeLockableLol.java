@@ -2,6 +2,7 @@ package com.makotomiyamoto.locksmithyv2.test;
 
 import com.makotomiyamoto.locksmithyv2.lib.lock.Lockable;
 import com.makotomiyamoto.locksmithyv2.lib.lock.insecure.LockableContainer;
+import com.makotomiyamoto.locksmithyv2.lib.util.ChatUtils;
 import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import org.bukkit.Chunk;
@@ -13,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -29,7 +31,7 @@ public class CreateFakeLockableLol implements Listener {
         Player player = event.getPlayer();
         if (player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
             if (player.isSneaking()) {
-                // create lockable block if it isnt there
+                // create lockable block if it isn't there
                 if (Locksmithy.locationIsLockable(event.getClickedBlock().getLocation())) {
                     player.sendMessage("Location is already lockable.");
                 } else {
@@ -44,9 +46,7 @@ public class CreateFakeLockableLol implements Listener {
                     }
                     Locksmithy.getLockableContainers().get(chunk).put(loc, lock);
                     player.sendMessage("New lockable created.");
-                    player.sendMessage(GsonManager.getGson().toJson(loc));
-                    player.sendMessage(GsonManager.getGson().toJson(chunk/*, Chunk.class*/));
-                    //player.sendMessage(GsonManager.getGson().toJson(lock));
+                    player.sendMessage(ChatUtils.randBrightColor() + GsonManager.getGson().toJson(lock));
                 }
             } else {
                 // get location data if lockable
@@ -54,7 +54,7 @@ public class CreateFakeLockableLol implements Listener {
                 if ((lockable = Locksmithy.get(event.getClickedBlock().getLocation())) == null) {
                     player.sendMessage("Location is not a lockable block.");
                 } else {
-                    player.sendMessage(GsonManager.getGson().toJson(lockable));
+                    player.sendMessage(ChatUtils.randBrightColor() + GsonManager.getGson().toJson(lockable));
                 }
             }
         }

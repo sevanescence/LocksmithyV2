@@ -1,6 +1,5 @@
-name: Locksmithyv2
-#version: @version@ <- removed from gradle
-version: 1.0
+name: Locksmithy
+version: @version@ # version specified by gradle configuration
 main: com.makotomiyamoto.locksmithyv2.LocksmithyPlugin
 api-version: 1.16
 commands:

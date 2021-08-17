@@ -9,7 +9,6 @@ import com.makotomiyamoto.locksmithyv2.impl.adapter.OfflinePlayerSerializationAd
 import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import com.makotomiyamoto.locksmithyv2.test.CreateFakeLockableLol;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -21,13 +20,14 @@ import java.util.Objects;
  * Runtime logic class for LocksmithyV2.
  *
  * @author MakotoMiyamoto
- * @version 1.0
+ * @version 0.1-ALPHA
  */
 public final class LocksmithyPlugin extends JavaPlugin {
     /**
      * Probably to be the only ever utility method in LocksmithyPlugin, this method is used
      * to prefix debug messages with the Locksmithy tag if necessary. Will probably never
-     * be used in a production setting, who knows.
+     * be used in a production setting, who knows. For writing to a file, just use Bukkit's
+     * built-in logger.
      *
      * @param string the string to be formatted
      * @return a formatted string with the [LocksmithyV2] prefix
@@ -40,6 +40,8 @@ public final class LocksmithyPlugin extends JavaPlugin {
     // e.g. /locksmithyv2/locks/chunk_x_z/Lockable#getUUID().json
     // resolve all the chunks and locations from storage at startup
     // TODO asynchronously save cache every 15 minutes (as a bukkit task)
+    // TODO craftable blank keys (don't do advanced keys yet)
+    // TODO add key mold command for admins
     private static File chunksFolder;
 
     @Override
