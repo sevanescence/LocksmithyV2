@@ -49,7 +49,6 @@ public abstract class GsonManager {
     public static <T> void registerSerializationAdapter(JsonSerializationAdapter<T> adapter) {
         Type type = ((ParameterizedType) adapter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         gsonBuilder.registerTypeAdapter(type, adapter);
-        //gson = gsonBuilder.create();
     }
 
     /**
@@ -67,7 +66,6 @@ public abstract class GsonManager {
     public static <T> void registerSerializationHierarchyAdapter(JsonSerializationAdapter<T> adapter) {
         Type type = ((ParameterizedType) adapter.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         gsonBuilder.registerTypeHierarchyAdapter((Class<?>) type, adapter);
-        //gson = gsonBuilder.create();
     }
 
     /**
