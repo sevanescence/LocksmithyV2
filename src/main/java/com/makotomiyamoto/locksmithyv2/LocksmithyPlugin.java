@@ -1,11 +1,13 @@
 package com.makotomiyamoto.locksmithyv2;
 
+import com.makotomiyamoto.locksmithyv2.impl.adapter.LockableListSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.impl.bukkit.executor.GetPlayerPosition;
 import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.BlockBreakListener;
 import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.ExplosionListener;
 import com.makotomiyamoto.locksmithyv2.impl.adapter.ChunkSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.impl.adapter.LocationSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.impl.adapter.OfflinePlayerSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.lib.util.CustomItemRecipeManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import com.makotomiyamoto.locksmithyv2.test.CreateFakeLockableLol;
@@ -50,6 +52,7 @@ public final class LocksmithyPlugin extends JavaPlugin {
         GsonManager.registerSerializationHierarchyAdapter(new OfflinePlayerSerializationAdapter());
         GsonManager.registerSerializationAdapter(new LocationSerializationAdapter());
         GsonManager.registerSerializationHierarchyAdapter(new ChunkSerializationAdapter());
+        GsonManager.registerSerializationAdapter(new LockableListSerializationAdapter());
         GsonManager.flush();
 
         Objects.requireNonNull(this.getCommand("ploc")).setExecutor(new GetPlayerPosition());
@@ -70,6 +73,8 @@ public final class LocksmithyPlugin extends JavaPlugin {
                 e.printStackTrace();
             }
         }
+
+        CustomItemRecipeManager.initialize(this);
 
         this.getLogger().info("LocksmithyV2 enabled without any problems.");
     }

@@ -3,7 +3,7 @@
     <a href="https://www.spigotmc.org/">
         <img src="https://img.shields.io/badge/Spigot-1.16.5-orange.svg" />
     </a>
-    <img src="https://img.shields.io/badge/Version-0.1--ALPHA-red.svg" />
+    <img src="https://img.shields.io/badge/Version-0.2--ALPHA-red.svg" />
     <br />
     <img src="https://tokei.rs/b1/github/MakotoMiyamoto/LocksmithyV2?category=code" />
     <a href="https://discord.gg/6TNYmfVKMD">
@@ -14,6 +14,13 @@
 Second edition of Locksmithy, with performance fixes and a later game version. The original project is deprecated as of July 29, 2021.
 
 # Changelog
+
+## 0.2-ALPHA
+### Added
+- Implemented proper serialization and deserialization on lockable containers
+- Simple Key crafting recipe added
+  - Key functionality is not yet added, will be implemented in next patch.
+#### Note: Secure lockable containers will be added in a future patch
 
 ## 0.1-ALPHA
 ### Added

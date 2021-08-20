@@ -9,14 +9,12 @@ import org.bukkit.Location;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.net.URI;
-import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -32,6 +30,8 @@ import java.util.regex.Pattern;
  */
 public abstract class Locksmithy {
     private static final HashMap<Chunk, HashMap<Location, Lockable>> lockableContainers = new HashMap<>();
+    private static final Type LOCKABLE_MAP_TYPE = new TypeToken<HashMap<Location, Lockable>>() {}.getType();
+    private static final Type LOCKABLE_LIST_TYPE = new TypeToken<List<Lockable>>() {}.getType();
 
     /**
      * Gets the lockable container cache. Common boolean evaluation for this data structure
@@ -45,7 +45,7 @@ public abstract class Locksmithy {
     /**
      * Checks whether a lockable container is an insecure container.
      * @param lockable the lockable container
-     * @return whether a lockable is insecure
+     * @return whether a lockable container is insecure
      * @see InsecureLockable
      */
     public static boolean lockableIsInsecure(Lockable lockable) {
@@ -55,8 +55,8 @@ public abstract class Locksmithy {
     /**
      * Checks whether a lockable container is a secure container.
      * @param lockable the lockable container
-     * @return whether a lockable is secure
-     * @see com.makotomiyamoto.locksmithyv2.lib.lock.SecureLockable SecureLockable
+     * @return whether a lockable container is secure
+     * @see com.makotomiyamoto.locksmithyv2.lib.lock.SecureLockable
      */
     public static boolean lockableIsSecure(Lockable lockable) {
         return !lockableIsInsecure(lockable);
@@ -101,30 +101,25 @@ public abstract class Locksmithy {
      * @param folder the folder which contains every chunk folder
      * @throws IOException might be returned if either the chunks folder does not exist
      * or something else goes wrong during file reading.
-     *
-     * @implNote Not yet implemented. Don't use this (yet).
      */
     public static void loadLockableChunksFolder(File folder) throws IOException {
-        // TODO implement this
-        // x_y.chunk.json
+        // x_z_WorldUUID.chunk.json
         File[] chunks = folder.listFiles((dir, name) -> name.endsWith(".chunk.json"));
         if (chunks == null) throw new FileNotFoundException("chunks folder does not exist.");
 
         Arrays.asList(chunks).forEach(file -> {
             try(FileReader reader = new FileReader(file)) {
-                Type mapType = new TypeToken<HashMap<Location, Lockable>>() {}.getType();
-                HashMap<Location, Lockable> lockableMap = GsonManager.getGson().fromJson(reader, mapType);
-                // TODO get chunk
+                List<Lockable> lockables = GsonManager.getGson().fromJson(reader, LOCKABLE_LIST_TYPE);
+                Map<Location, Lockable> lockableMap = lockables.stream().collect(Collectors.toMap(Lockable::getLockLocation, Function.identity()));
 
-                // chunk x, y: [-0-9]+?(?=[^-0-9]) # first match is x, second is y
+                // chunk x, z: [-0-9]+?(?=[^-0-9]) # first match is x, second is y
                 // world uuid: [0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}
                 //      # first match is uuid
                 Pattern chunk_x_y = Pattern.compile("[-0-9]+?(?=[^-0-9])");
-                Pattern chunk_uuid
-                        = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}");
+                Pattern world_uuid = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}");
 
                 Matcher chunkXYMatcher = chunk_x_y.matcher(file.getName());
-                Matcher worldUUIDMatcher = chunk_uuid.matcher(file.getName());
+                Matcher worldUUIDMatcher = world_uuid.matcher(file.getName());
 
                 int x, y;
                 UUID uuid;
@@ -133,7 +128,7 @@ public abstract class Locksmithy {
                 uuid = UUID.fromString(MatcherUtils.getNextFind(worldUUIDMatcher, 0));
 
                 Chunk chunk = Objects.requireNonNull(Bukkit.getWorld(uuid)).getChunkAt(x, y);
-                Locksmithy.getLockableContainers().put(chunk, lockableMap);
+                Locksmithy.getLockableContainers().put(chunk, (HashMap<Location, Lockable>) lockableMap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -149,10 +144,24 @@ public abstract class Locksmithy {
      * @param folder the folder which contains every chunk folder
      * @throws IOException might be returned if either the chunks folder does not exist
      * or something else goes wrong during file writing.
-     *
-     * @implNote Not yet implemented. Don't use this (yet).
      */
     public static void saveLockableChunksCache(File folder) throws IOException {
-        // TODO implement this
+        // x_z_WorldUUID.chunk.json
+        lockableContainers.forEach((chunk, map) -> {
+            String filename = String.format("%d_%d_%s.chunk.json", chunk.getX(), chunk.getZ(), chunk.getWorld().getUID());
+
+            ArrayList<Lockable> lockables = new ArrayList<>();
+            map.forEach((location, lockable) -> {
+                lockables.add(lockable);
+            });
+
+            String json = GsonManager.getGson().toJson(lockables);
+            File chunkFile = new File(folder.getAbsolutePath() + File.separator + filename);
+            try (FileOutputStream fos = new FileOutputStream(chunkFile)) {
+                fos.write(json.getBytes(StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

@@ -1,5 +1,5 @@
 name: Locksmithy
-version: 0.1-ALPHA # version specified by gradle configuration
+version: 0.2-ALPHA # version specified by gradle configuration
 main: com.makotomiyamoto.locksmithyv2.LocksmithyPlugin
 api-version: 1.16
 commands:

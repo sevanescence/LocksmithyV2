@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.makotomiyamoto'
 project.archivesBaseName = 'locksmithy'
-version = '0.1-ALPHA'
+version = '0.2-ALPHA'
 jar.archiveFileName = 'lockmithy.jar'
 
 repositories {

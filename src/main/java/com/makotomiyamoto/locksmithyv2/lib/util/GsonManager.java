@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
  */
 public abstract class GsonManager {
     private static Gson gson;
-    private static final GsonBuilder gsonBuilder = new GsonBuilder().disableHtmlEscaping();
+    private static final GsonBuilder gsonBuilder = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting();
 
     /**
      * Flush the built-in GsonBuilder to append all of its new changes
