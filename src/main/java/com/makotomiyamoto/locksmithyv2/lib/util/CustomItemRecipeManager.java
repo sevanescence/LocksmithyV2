@@ -14,6 +14,8 @@ public abstract class CustomItemRecipeManager {
     public static NamespacedKey insecureKeyRecipeKey;
     public static ShapedRecipe insecureKeyRecipe;
     public static ItemStack insecureKeyItem;
+
+    public static NamespacedKey keyBoundId;
     static {
         insecureKeyItem = new ItemStack(Material.IRON_NUGGET);
         ItemMeta meta = insecureKeyItem.getItemMeta();
@@ -25,6 +27,7 @@ public abstract class CustomItemRecipeManager {
                 ChatColor.GRAY + "to lock the container and assign the key."
         };
         meta.setLore(List.of(lore));
+
         insecureKeyItem.setItemMeta(meta);
     }
 

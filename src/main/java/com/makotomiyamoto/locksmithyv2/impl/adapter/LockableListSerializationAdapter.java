@@ -20,7 +20,6 @@ public class LockableListSerializationAdapter extends JsonSerializationAdapter<L
         ArrayList<Lockable> lockables = new ArrayList<>();
         JsonArray array = json.getAsJsonArray();
 
-
         array.forEach(object -> {
             if (((JsonObject) object).get("picked") != null) {
                 lockables.add(context.deserialize(object, LockableContainer.class));
