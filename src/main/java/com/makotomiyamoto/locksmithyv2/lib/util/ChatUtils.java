@@ -13,7 +13,7 @@ public abstract class ChatUtils {
         return ChatColor.of(rand.ints(3).mapToObj(Integer::toHexString).reduce("", concatenate));
     }
     public static ChatColor randColorRange(int origin, int bound) {
-        return ChatColor.of(
+        return ChatColor.of("#" +
                 rand.ints(3, origin, bound).mapToObj(Integer::toHexString).reduce("", concatenate));
     }
     public static ChatColor randBrightColor() {

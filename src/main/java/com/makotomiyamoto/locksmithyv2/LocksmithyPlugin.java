@@ -7,8 +7,10 @@ import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.ExplosionListener;
 import com.makotomiyamoto.locksmithyv2.impl.adapter.ChunkSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.impl.adapter.LocationSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.impl.adapter.OfflinePlayerSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.PlayerInteractListener;
 import com.makotomiyamoto.locksmithyv2.lib.util.CustomItemRecipeManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
+import com.makotomiyamoto.locksmithyv2.lib.util.KeyDataManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import com.makotomiyamoto.locksmithyv2.test.CreateFakeLockableLol;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -50,9 +52,9 @@ public final class LocksmithyPlugin extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         GsonManager.registerSerializationHierarchyAdapter(new OfflinePlayerSerializationAdapter());
-        GsonManager.registerSerializationAdapter(new LocationSerializationAdapter());
         GsonManager.registerSerializationHierarchyAdapter(new ChunkSerializationAdapter());
         GsonManager.registerSerializationAdapter(new LockableListSerializationAdapter());
+        GsonManager.registerSerializationAdapter(new LocationSerializationAdapter());
         GsonManager.flush();
 
         Objects.requireNonNull(this.getCommand("ploc")).setExecutor(new GetPlayerPosition());
@@ -60,8 +62,10 @@ public final class LocksmithyPlugin extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         this.getServer().getPluginManager().registerEvents(new ExplosionListener(), this);
 
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+
         // test
-        this.getServer().getPluginManager().registerEvents(new CreateFakeLockableLol(), this);
+        //this.getServer().getPluginManager().registerEvents(new CreateFakeLockableLol(), this);
 
         try {
             chunksFolder = new File(this.getDataFolder().getAbsolutePath() + File.separator + "chunks");
@@ -75,6 +79,7 @@ public final class LocksmithyPlugin extends JavaPlugin {
         }
 
         CustomItemRecipeManager.initialize(this);
+        KeyDataManager.initialize(this);
 
         this.getLogger().info("LocksmithyV2 enabled without any problems.");
     }
