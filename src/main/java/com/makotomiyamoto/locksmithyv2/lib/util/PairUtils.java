@@ -4,6 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Chest;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.util.Vector;
 
 import java.util.HashMap;
@@ -46,5 +47,14 @@ public abstract class PairUtils {
         Location loc = chestBlock.getLocation().add(vec);
 
         return loc.getBlock();
+    }
+
+    public static Block getConnectedDoorHalf(Block doorBlock) {
+        try {
+            return null;
+        } catch (ClassCastException ignored) {
+            throw new ClassCastException("Parameter block must be a door. If you're getting " +
+                    "this error then, you guessed it, it probably isn't.");
+        }
     }
 }

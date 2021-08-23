@@ -2,7 +2,6 @@ package com.makotomiyamoto.locksmithyv2.impl.bukkit.listener;
 
 import com.makotomiyamoto.locksmithyv2.lib.lock.event.LockAssignEvent;
 import com.makotomiyamoto.locksmithyv2.lib.util.CustomItemRecipeManager;
-import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -38,6 +37,7 @@ public class PlayerInteractListener implements Listener {
                 player.sendMessage("Lock could not be assigned.");
             } else {
                 player.sendMessage("New lock created!");
+                player.sendMessage(lockAssignEvent.getLockableList().toString());
             }
         } else {
             player.sendMessage("Failed");
