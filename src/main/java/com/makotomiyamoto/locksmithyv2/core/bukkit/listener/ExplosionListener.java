@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.impl.bukkit.listener;
+package com.makotomiyamoto.locksmithyv2.core.bukkit.listener;
 
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import org.bukkit.block.Block;

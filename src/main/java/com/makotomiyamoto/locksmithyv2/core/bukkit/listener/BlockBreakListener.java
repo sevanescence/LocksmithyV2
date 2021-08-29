@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.impl.bukkit.listener;
+package com.makotomiyamoto.locksmithyv2.core.bukkit.listener;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
