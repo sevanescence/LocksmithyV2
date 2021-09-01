@@ -10,6 +10,7 @@ import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.KeyDataManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -81,6 +82,7 @@ public final class LocksmithyPlugin extends JavaPlugin {
         KeyDataManager.initialize(this);
 
         this.getLogger().info("LocksmithyV2 enabled without any problems.");
+        this.getLogger().info("" + Bukkit.getOfflinePlayer(UUID.fromString("d61c67b0-b7b0-4881-9539-1d4e32c41864")));
     }
 
     @Override

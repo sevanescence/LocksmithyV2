@@ -10,12 +10,12 @@ public class LockablePairContainer extends LockableContainer implements ILockabl
     private transient LockablePairContainer pair;
     private final UUID uuid;
 
-    protected LockablePairContainer(OfflinePlayer player, Location location, LockablePairContainer pair, UUID uuid, boolean picked, boolean locked) {
+    protected LockablePairContainer(OfflinePlayer player, Location location, LockablePairContainer pair, UUID uuid, boolean locked, boolean picked) {
         super(player, location);
         this.pair = pair;
         this.uuid = uuid;
-        this.picked = picked;
         this.locked = locked;
+        this.picked = picked;
     }
 
     protected LockablePairContainer(OfflinePlayer player, Location thisLocation, LockablePairContainer pair) {

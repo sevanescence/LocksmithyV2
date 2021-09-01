@@ -11,6 +11,7 @@ import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -41,6 +42,11 @@ public class PlayerInteractListener implements Listener {
         assert block != null;
 
         Player player = event.getPlayer();
+        if (player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
+            player.sendMessage("" + Locksmithy.locationIsLockable(event.getClickedBlock().getLocation()));
+            return;
+        }
+
         if (player.getInventory().getItemInMainHand().isSimilar(CustomItemRecipeManager.insecureKeyItem)) {
             // check if player has inventory space for new key
             // for now, just handle creating the lock

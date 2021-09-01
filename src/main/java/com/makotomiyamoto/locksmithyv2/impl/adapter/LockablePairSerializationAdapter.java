@@ -41,7 +41,7 @@ public class LockablePairSerializationAdapter extends JsonSerializationAdapter<L
     public LockablePairContainer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject object = (JsonObject) json;
 
-        OfflinePlayer owner = Bukkit.getPlayer(UUID.fromString(object.get("owner").getAsString()));
+        OfflinePlayer owner = context.deserialize(object.get("owner"), OfflinePlayer.class);
         Location location = context.deserialize(object.get("location"), Location.class);
         //LockablePairContainer pair = context.deserialize(object.get("pair"), LockablePairContainer.class);
         UUID uuid = UUID.fromString(object.get("uuid").getAsString());
@@ -51,7 +51,7 @@ public class LockablePairSerializationAdapter extends JsonSerializationAdapter<L
         // TODO couple the two pairs, they should have the same state anyway
         // deserialize pair
         JsonObject pairObject = (JsonObject) object.get("pair");
-        OfflinePlayer pairOwner = Bukkit.getPlayer(UUID.fromString(pairObject.get("owner").getAsString()));
+        OfflinePlayer pairOwner = context.deserialize(pairObject.get("owner"), OfflinePlayer.class);
         Location pairLocation = context.deserialize(pairObject.get("location"), Location.class);
         UUID pairUuid = UUID.fromString(pairObject.get("owner").getAsString());
         boolean pairLocked = pairObject.get("locked").getAsBoolean();
