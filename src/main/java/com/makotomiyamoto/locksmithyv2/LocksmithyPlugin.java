@@ -1,23 +1,22 @@
 package com.makotomiyamoto.locksmithyv2;
 
-import com.makotomiyamoto.locksmithyv2.impl.adapter.LockableListSerializationAdapter;
+import com.makotomiyamoto.locksmithyv2.impl.adapter.*;
 import com.makotomiyamoto.locksmithyv2.core.bukkit.executor.GetPlayerPosition;
 import com.makotomiyamoto.locksmithyv2.core.bukkit.listener.BlockBreakListener;
 import com.makotomiyamoto.locksmithyv2.core.bukkit.listener.ExplosionListener;
-import com.makotomiyamoto.locksmithyv2.impl.adapter.ChunkSerializationAdapter;
-import com.makotomiyamoto.locksmithyv2.impl.adapter.LocationSerializationAdapter;
-import com.makotomiyamoto.locksmithyv2.impl.adapter.OfflinePlayerSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.core.bukkit.listener.PlayerInteractListener;
 import com.makotomiyamoto.locksmithyv2.lib.util.CustomItemRecipeManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.KeyDataManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * Runtime logic class for LocksmithyV2.
@@ -52,6 +51,7 @@ public final class LocksmithyPlugin extends JavaPlugin {
         // Plugin startup logic
         GsonManager.registerSerializationHierarchyAdapter(new OfflinePlayerSerializationAdapter());
         GsonManager.registerSerializationHierarchyAdapter(new ChunkSerializationAdapter());
+        GsonManager.registerSerializationHierarchyAdapter(new LockablePairSerializationAdapter());
         GsonManager.registerSerializationAdapter(new LockableListSerializationAdapter());
         GsonManager.registerSerializationAdapter(new LocationSerializationAdapter());
         GsonManager.flush();

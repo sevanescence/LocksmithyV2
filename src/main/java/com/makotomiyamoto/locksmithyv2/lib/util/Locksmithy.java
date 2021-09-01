@@ -93,6 +93,17 @@ public abstract class Locksmithy {
         return lockablesInChunk.get(location);
     }
 
+    public static void set(Location location, Lockable lockable) {
+        HashMap<Location, Lockable> lockables = Locksmithy.getLockableContainers().get(location.getChunk());
+        if (lockables == null) {
+            lockables = new HashMap<>();
+            lockables.put(location, lockable);
+            Locksmithy.getLockableContainers().put(location.getChunk(), lockables);
+            return;
+        };
+        lockables.put(location, lockable);
+    }
+
     /**
      * Attempts to read the chunks folder in the LocksmithyV2 data folder and parse
      * the data into the Locksmithy lockable cache. Calling this method during runtime

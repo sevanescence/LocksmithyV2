@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.makotomiyamoto.locksmithyv2.lib.gson.adapter.JsonSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.lib.lock.Lockable;
 import com.makotomiyamoto.locksmithyv2.lib.lock.insecure.LockableContainer;
+import com.makotomiyamoto.locksmithyv2.lib.lock.insecure.LockablePairContainer;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -21,7 +22,9 @@ public class LockableListSerializationAdapter extends JsonSerializationAdapter<L
         JsonArray array = json.getAsJsonArray();
 
         array.forEach(object -> {
-            if (((JsonObject) object).get("picked") != null) {
+            if (((JsonObject) object).get("pair") != null) {
+                lockables.add(context.deserialize(object, LockablePairContainer.class));
+            } else if (((JsonObject) object).get("picked") != null) {
                 lockables.add(context.deserialize(object, LockableContainer.class));
             }
         });

@@ -23,9 +23,7 @@ public class OfflinePlayerSerializationAdapter extends JsonSerializationAdapter<
 
     @Override
     public OfflinePlayer deserialize(JsonElement jsonElement, Type typeOfElement, JsonDeserializationContext context) {
-        JsonObject playerJsonObject = (JsonObject) jsonElement;
-
-        UUID playerUid = UUID.fromString(playerJsonObject.get("uuid").getAsString());
+        UUID playerUid = UUID.fromString(jsonElement.getAsString());
 
         return Bukkit.getOfflinePlayer(playerUid);
     }

@@ -7,8 +7,16 @@ import org.bukkit.OfflinePlayer;
 import java.util.UUID;
 
 public class LockablePairContainer extends LockableContainer implements ILockablePair<LockablePairContainer> {
-    private final LockablePairContainer pair;
+    private transient LockablePairContainer pair;
     private final UUID uuid;
+
+    protected LockablePairContainer(OfflinePlayer player, Location location, LockablePairContainer pair, UUID uuid, boolean picked, boolean locked) {
+        super(player, location);
+        this.pair = pair;
+        this.uuid = uuid;
+        this.picked = picked;
+        this.locked = locked;
+    }
 
     protected LockablePairContainer(OfflinePlayer player, Location thisLocation, LockablePairContainer pair) {
         super(player, thisLocation);
@@ -25,6 +33,11 @@ public class LockablePairContainer extends LockableContainer implements ILockabl
     @Override
     public LockablePairContainer getPairLockable() {
         return pair;
+    }
+
+    @Override
+    public void setPairLockable(LockablePairContainer pairLockable) {
+        pair = pairLockable;
     }
 
     @Override
