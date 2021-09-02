@@ -69,8 +69,7 @@ public abstract class Locksmithy {
      * @return whether a location is lockable
      */
     public static boolean locationIsLockable(Location location) {
-        HashMap<Location, Lockable> lockablesInChunk = lockableContainers.get(location.getChunk());
-        return lockablesInChunk != null && lockablesInChunk.get(location) != null;
+        return get(location) != null;
     }
 
     /**

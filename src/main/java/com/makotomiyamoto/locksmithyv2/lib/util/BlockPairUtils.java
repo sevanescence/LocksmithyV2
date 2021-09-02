@@ -29,8 +29,8 @@ public abstract class BlockPairUtils {
 
         cartesianVectorMap.put(BlockFace.NORTH, new Vector(1, 0, 0));
         cartesianVectorMap.put(BlockFace.SOUTH, new Vector(-1, 0, 0));
-        cartesianVectorMap.put(BlockFace.EAST, new Vector(0, 0, -1));
-        cartesianVectorMap.put(BlockFace.WEST, new Vector(0, 0, 1));
+        cartesianVectorMap.put(BlockFace.EAST, new Vector(0, 0, 1));
+        cartesianVectorMap.put(BlockFace.WEST, new Vector(0, 0, -1));
     }
 
     public static Block getConnectedChest(org.bukkit.block.Chest chestBlock) {
@@ -43,8 +43,8 @@ public abstract class BlockPairUtils {
         BlockFace facing = chestBlockData.getFacing();
         int vectorMultiplier = type.equals(Chest.Type.LEFT) ? 1 : -1;
 
-        Vector vec = cartesianVectorMap.get(facing).multiply(vectorMultiplier);
-        Location loc = chestBlock.getLocation().add(vec);
+        Vector vec = cartesianVectorMap.get(facing).clone().multiply(vectorMultiplier);
+        Location loc = chestBlock.getLocation().clone().add(vec);
 
         return loc.getBlock();
     }
@@ -52,10 +52,11 @@ public abstract class BlockPairUtils {
     public static Block getConnectedDoorHalf(Block doorBlock) {
         try {
             Bisected door = (Bisected) doorBlock.getBlockData();
+            Location loc;
             if (door.getHalf().equals(Bisected.Half.TOP)) {
-                return doorBlock.getLocation().add(0, -1, 0).getBlock();
+                return doorBlock.getLocation().clone().add(0, -1, 0).getBlock();
             } else {
-                return doorBlock.getLocation().add(0, 1, 0).getBlock();
+                return doorBlock.getLocation().clone().add(0, 1, 0).getBlock();
             }
         } catch (ClassCastException ignored) {
             throw new ClassCastException("Parameter block must be a door. If you're getting " +

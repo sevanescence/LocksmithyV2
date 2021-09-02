@@ -8,10 +8,7 @@ import com.makotomiyamoto.locksmithyv2.lib.util.BlockPairUtils;
 import com.makotomiyamoto.locksmithyv2.lib.util.CustomItemRecipeManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.KeyDataManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
@@ -43,8 +40,12 @@ public class PlayerInteractListener implements Listener {
 
         Player player = event.getPlayer();
         if (player.getInventory().getItemInMainHand().getType().equals(Material.STICK)) {
-            player.sendMessage("" + Locksmithy.locationIsLockable(event.getClickedBlock().getLocation()));
+            Location location = block.getLocation();
+            player.sendMessage("" + location.getX() + " " + location.getY() + " " + location.getZ());
+            player.sendMessage("" + Locksmithy.locationIsLockable(block.getLocation()));
             return;
+        } else if (player.getInventory().getItemInMainHand().getType().equals(Material.PAPER)) {
+            player.sendMessage(Locksmithy.getLockableContainers().toString());
         }
 
         if (player.getInventory().getItemInMainHand().isSimilar(CustomItemRecipeManager.insecureKeyItem)) {
@@ -102,6 +103,8 @@ public class PlayerInteractListener implements Listener {
 
                 for (Lockable lockable : lockAssignEvent.getLockableList()) {
                     Locksmithy.set(lockable.getLockLocation(), lockable);
+                    Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 127, 255), 1.0F);
+                    event.getPlayer().getWorld().spawnParticle(Particle.REDSTONE, lockable.getLockLocation().clone().add(0, 1, 0), 3, dustOptions);
                 }
             }
         } else {
