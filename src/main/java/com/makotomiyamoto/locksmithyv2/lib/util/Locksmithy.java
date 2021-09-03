@@ -82,7 +82,7 @@ public abstract class Locksmithy {
      *  Returns <code>null</code> if no lockable container exists at this location.
      * </p>
      * @param location a location object
-     * @return A lockable container, or null
+     * @return a lockable container, or null
      */
     public static Lockable get(Location location) {
         HashMap<Location, Lockable> lockablesInChunk = lockableContainers.get(location.getChunk());
@@ -92,15 +92,23 @@ public abstract class Locksmithy {
         return lockablesInChunk.get(location);
     }
 
+    /**
+     * <p>
+     * Set a lockable container at a location. If a chunk does not already exist in
+     * the list, it will be resolved and added through the given location.
+     * </p>
+     * @param location a location object
+     * @param lockable a lockable container
+     */
     public static void set(Location location, Lockable lockable) {
         HashMap<Location, Lockable> lockables = Locksmithy.getLockableContainers().get(location.getChunk());
         if (lockables == null) {
             lockables = new HashMap<>();
             lockables.put(location, lockable);
             Locksmithy.getLockableContainers().put(location.getChunk(), lockables);
-            return;
-        };
-        lockables.put(location, lockable);
+        } else {
+            lockables.put(location, lockable);
+        }
     }
 
     /**
