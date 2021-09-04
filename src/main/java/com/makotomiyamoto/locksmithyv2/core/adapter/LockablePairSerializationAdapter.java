@@ -1,10 +1,9 @@
-package com.makotomiyamoto.locksmithyv2.impl.adapter;
+package com.makotomiyamoto.locksmithyv2.core.adapter;
 
 import com.google.gson.*;
 import com.makotomiyamoto.locksmithyv2.lib.gson.adapter.JsonSerializationAdapter;
 import com.makotomiyamoto.locksmithyv2.lib.lock.insecure.LockablePairContainer;
 import com.makotomiyamoto.locksmithyv2.lib.lock.insecure.LockablePairContainerFactory;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 

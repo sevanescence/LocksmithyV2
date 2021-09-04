@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.core;
+package com.makotomiyamoto.locksmithyv2.impl.locksmithy.listener;
 
 import com.makotomiyamoto.locksmithyv2.lib.lock.ILockablePair;
 import com.makotomiyamoto.locksmithyv2.lib.lock.Lockable;
