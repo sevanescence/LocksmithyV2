@@ -1,4 +1,4 @@
-package com.makotomiyamoto.locksmithyv2.impl.locksmithy.listener;
+package com.makotomiyamoto.locksmithyv2.impl.bukkit.listener;
 
 import com.makotomiyamoto.locksmithyv2.lib.util.Locksmithy;
 import org.bukkit.block.Block;
@@ -12,7 +12,7 @@ public class ExplosionListener implements Listener {
     public void onExplosion(EntityExplodeEvent event) {
         event.blockList().removeIf(e -> Locksmithy.locationIsLockable(e.getLocation()));
         event.blockList().removeIf(e -> {
-            Block blockAbove = e.getLocation().add(0, 1, 0).getBlock();
+            Block blockAbove = e.getLocation().clone().add(0, 1, 0).getBlock();
             return blockAbove.getBlockData() instanceof Door && Locksmithy.locationIsLockable(blockAbove.getLocation());
         });
     }

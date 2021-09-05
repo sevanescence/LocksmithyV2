@@ -2,8 +2,8 @@ package com.makotomiyamoto.locksmithyv2;
 
 import com.makotomiyamoto.locksmithyv2.core.adapter.*;
 import com.makotomiyamoto.locksmithyv2.core.bukkit.executor.GetPlayerPosition;
-import com.makotomiyamoto.locksmithyv2.impl.locksmithy.listener.BlockBreakListener;
-import com.makotomiyamoto.locksmithyv2.impl.locksmithy.listener.ExplosionListener;
+import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.BlockBreakListener;
+import com.makotomiyamoto.locksmithyv2.impl.bukkit.listener.ExplosionListener;
 import com.makotomiyamoto.locksmithyv2.core.bukkit.listener.PlayerInteractListener;
 import com.makotomiyamoto.locksmithyv2.lib.util.CustomItemRecipeManager;
 import com.makotomiyamoto.locksmithyv2.lib.util.GsonManager;
