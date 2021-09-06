@@ -20,12 +20,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class PlayerInteractListener implements Listener {
     @EventHandler
@@ -48,6 +47,7 @@ public class PlayerInteractListener implements Listener {
             player.sendMessage(Locksmithy.getLockableContainers().toString());
         }
 
+        Lockable targetLockable;
         if (player.getInventory().getItemInMainHand().isSimilar(CustomItemRecipeManager.insecureKeyItem)) {
             // check if player has inventory space for new key
             // for now, just handle creating the lock
@@ -86,8 +86,7 @@ public class PlayerInteractListener implements Listener {
                 UUID lockableUid = lockAssignEvent.getLockableList().get(0).getLockUUID();
                 ItemMeta keyMeta = lockAssignEvent.getPlayer().getInventory().getItemInMainHand().getItemMeta(); assert keyMeta != null;
                 keyMeta.getPersistentDataContainer().set(KeyDataManager.keyBoundId, KeyDataManager.keyBoundIdTagType, lockableUid);
-//                Objects.requireNonNull(keyMeta.getLore()).addAll(List.of("", ChatColor.GRAY + "Owner: " + event.getPlayer().getName()));
-//                System.out.println(keyMeta.getLore());
+
                 ArrayList<String> keyLore = new ArrayList<>(Objects.requireNonNull(keyMeta.getLore()));
                 keyLore.addAll( List.of("", ChatColor.GRAY + "Owner: " + event.getPlayer().getName()) );
                 keyMeta.setLore(keyLore);
@@ -99,16 +98,25 @@ public class PlayerInteractListener implements Listener {
 
                 lockAssignEvent.getPlayer().getInventory().getItemInMainHand().setItemMeta(keyMeta);
                 player.sendMessage(ChatColor.GREEN + "Lockable created! (not really, but it was successful)");
-//                player.sendMessage(lockAssignEvent.getLockableList().toString());
 
                 for (Lockable lockable : lockAssignEvent.getLockableList()) {
                     Locksmithy.set(lockable.getLockLocation(), lockable);
                     Particle.DustOptions dustOptions = new Particle.DustOptions(Color.fromRGB(0, 127, 255), 1.0F);
-                    event.getPlayer().getWorld().spawnParticle(Particle.REDSTONE, lockable.getLockLocation().clone().add(0, 1, 0), 3, dustOptions);
+                    event.getPlayer().getWorld().spawnParticle(Particle.REDSTONE, lockable.getLockLocation().clone().add(0.5, 1, 0.5), 3, dustOptions);
                 }
             }
-        } else {
-            //player.sendMessage("Failed");
+        } else if ((targetLockable = Locksmithy.get(block.getLocation())) != null) {
+            UUID lockUniqueId = targetLockable.getLockUUID();
+            @SuppressWarnings("ConstantConditions")
+            List<ItemStack> keysOfTargetLockable = Arrays.stream(player.getInventory().getContents())
+                    .filter(KeyDataManager::itemIsKey)
+                    .filter(itemStack -> itemStack
+                            .getItemMeta()
+                            .getPersistentDataContainer()
+                            .get(KeyDataManager.keyBoundId, KeyDataManager.keyBoundIdTagType)
+                            .equals(lockUniqueId))
+                    .collect(Collectors.toList());
+            
         }
     }
 }
