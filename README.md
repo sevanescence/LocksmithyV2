@@ -16,7 +16,7 @@ Second edition of Locksmithy, with performance fixes and a later game version.
 
 # Changelog
 
-## 0.3-ALPHA
+## 0.4-ALPHA
 
 ### Added
 

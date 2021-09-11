@@ -116,7 +116,7 @@ public class PlayerInteractListener implements Listener {
                             .get(KeyDataManager.keyBoundId, KeyDataManager.keyBoundIdTagType)
                             .equals(lockUniqueId))
                     .collect(Collectors.toList());
-            
+
         }
     }
 }
